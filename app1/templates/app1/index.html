@@ -1,0 +1,57 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+
+<div class="container"> 
+    <!-- Forms -->
+    <div class="row">
+        <div class="col col-8 offset-2">
+            <h1 class=" alert alert-warning text-center">Student Registration Form </h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="submit" class="btn btn-primary">
+  </form>
+</div>
+</div>
+     <!-- Display Data -->
+
+     <br> <br> 
+     <h1 class=" alert alert-warning text-center">Student Records </h1>
+      <table class="table my-5">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">SNo.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+          <tr>
+            <th scope="row">{{i.id}}</th>
+            <td>{{i.name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.password}}</td>
+            <td>
+                <!-- update icon  -->
+                <a href="{% url 'update' i.id %}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+
+                <!-- Delete icon -->
+                <form action="{% url  'delete' i.id %}"  method="post"  class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit">
+                    <i class="fa-solid fa-trash"></i>
+                      </button>
+            </form>
+            </td>
+          </tr>
+           {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock content %}
